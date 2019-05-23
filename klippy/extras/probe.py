@@ -268,7 +268,7 @@ class ProbePointsHelper:
         try:
             self.toolhead.move(curpos, speed)
         except homing.EndstopError as e:
-            self._finalize(False)
+            self._finalize()
             raise self.gcode.error(str(e))
     def _move_next(self):
         # Lift toolhead
@@ -276,8 +276,12 @@ class ProbePointsHelper:
         # Check if done probing
         if len(self.results) >= len(self.probe_points):
             self.toolhead.get_last_move_time()
-            self._finalize(True)
-            return
+            self._finalize()
+            res = self.finalize_callback(self.probe_offsets, self.results)
+            if res != "retry":
+                return
+            self.results = []
+            self.busy = True
         # Move to next XY probe point
         x, y = self.probe_points[len(self.results)]
         curpos = self.toolhead.get_position()
@@ -287,7 +291,7 @@ class ProbePointsHelper:
         try:
             self.toolhead.move(curpos, self.speed)
         except homing.EndstopError as e:
-            self._finalize(False)
+            self._finalize()
             raise self.gcode.error(str(e))
         self.gcode.reset_last_position()
         if self.manual_probe:
@@ -299,7 +303,7 @@ class ProbePointsHelper:
             try:
                 self.gcode.run_script_from_command("PROBE")
             except self.gcode.error as e:
-                self._finalize(False)
+                self._finalize()
                 raise
             positions.append(self.toolhead.get_position())
             if i < self.samples - 1:
@@ -354,15 +358,13 @@ class ProbePointsHelper:
                 self._move_next()
     def _manual_probe_finalize(self, kin_pos):
         if kin_pos is None:
-            self._finalize(False)
+            self._finalize()
             return
         self.results.append(kin_pos)
         self._move_next()
-    def _finalize(self, success):
+    def _finalize(self):
         self.busy = False
         self.gcode.reset_last_position()
-        if success:
-            self.finalize_callback(self.probe_offsets, self.results)
 
 def load_config(config):
     return PrinterProbe(config, ProbeEndstopWrapper(config))
