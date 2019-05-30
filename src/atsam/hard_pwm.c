@@ -20,77 +20,77 @@ DECL_CONSTANT("PWM_MAX", MAX_PWM);
 
 struct gpio_tc_info {
     uint8_t gpio, ptype, id;
-    void *reg;
+    volatile void *reg;
 };
 
 static const struct gpio_tc_info tc_regs[] = {
 #if CONFIG_MACH_SAM3X
-    { GPIO('B', 25), 'B', ID_TC0, (void*)&TC0->TC_CHANNEL[0].TC_RA },
-    { GPIO('A', 2),  'A', ID_TC0, (void*)&TC0->TC_CHANNEL[1].TC_RA },
-    { GPIO('A', 5),  'A', ID_TC0, (void*)&TC0->TC_CHANNEL[2].TC_RA },
-    { GPIO('B', 27), 'B', ID_TC0, (void*)&TC0->TC_CHANNEL[0].TC_RB },
-    { GPIO('A', 3),  'A', ID_TC0, (void*)&TC0->TC_CHANNEL[1].TC_RB },
-    { GPIO('A', 6),  'A', ID_TC0, (void*)&TC0->TC_CHANNEL[2].TC_RB },
-    { GPIO('B', 0),  'B', ID_TC1, (void*)&TC1->TC_CHANNEL[0].TC_RA },
-    { GPIO('B', 2),  'B', ID_TC1, (void*)&TC1->TC_CHANNEL[1].TC_RA },
-    { GPIO('B', 4),  'B', ID_TC1, (void*)&TC1->TC_CHANNEL[2].TC_RA },
-    { GPIO('B', 1),  'B', ID_TC1, (void*)&TC1->TC_CHANNEL[0].TC_RB },
-    { GPIO('B', 3),  'B', ID_TC1, (void*)&TC1->TC_CHANNEL[1].TC_RB },
-    { GPIO('B', 5),  'B', ID_TC1, (void*)&TC1->TC_CHANNEL[2].TC_RB },
+    { GPIO('B', 25), 'B', ID_TC0, &TC0->TC_CHANNEL[0].TC_RA },
+    { GPIO('A', 2),  'A', ID_TC0, &TC0->TC_CHANNEL[1].TC_RA },
+    { GPIO('A', 5),  'A', ID_TC0, &TC0->TC_CHANNEL[2].TC_RA },
+    { GPIO('B', 27), 'B', ID_TC0, &TC0->TC_CHANNEL[0].TC_RB },
+    { GPIO('A', 3),  'A', ID_TC0, &TC0->TC_CHANNEL[1].TC_RB },
+    { GPIO('A', 6),  'A', ID_TC0, &TC0->TC_CHANNEL[2].TC_RB },
+    { GPIO('B', 0),  'B', ID_TC1, &TC1->TC_CHANNEL[0].TC_RA },
+    { GPIO('B', 2),  'B', ID_TC1, &TC1->TC_CHANNEL[1].TC_RA },
+    { GPIO('B', 4),  'B', ID_TC1, &TC1->TC_CHANNEL[2].TC_RA },
+    { GPIO('B', 1),  'B', ID_TC1, &TC1->TC_CHANNEL[0].TC_RB },
+    { GPIO('B', 3),  'B', ID_TC1, &TC1->TC_CHANNEL[1].TC_RB },
+    { GPIO('B', 5),  'B', ID_TC1, &TC1->TC_CHANNEL[2].TC_RB },
 #if CONFIG_MACH_SAM3X8E
-    { GPIO('C', 25), 'B', ID_TC2, (void*)&TC2->TC_CHANNEL[0].TC_RA },
-    { GPIO('C', 28), 'B', ID_TC2, (void*)&TC2->TC_CHANNEL[1].TC_RA },
-    { GPIO('D', 7),  'B', ID_TC2, (void*)&TC2->TC_CHANNEL[2].TC_RA },
-    { GPIO('C', 26), 'B', ID_TC2, (void*)&TC2->TC_CHANNEL[0].TC_RB },
-    { GPIO('C', 29), 'B', ID_TC2, (void*)&TC2->TC_CHANNEL[1].TC_RB },
-    { GPIO('D', 8),  'B', ID_TC2, (void*)&TC2->TC_CHANNEL[2].TC_RB },
+    { GPIO('C', 25), 'B', ID_TC2, &TC2->TC_CHANNEL[0].TC_RA },
+    { GPIO('C', 28), 'B', ID_TC2, &TC2->TC_CHANNEL[1].TC_RA },
+    { GPIO('D', 7),  'B', ID_TC2, &TC2->TC_CHANNEL[2].TC_RA },
+    { GPIO('C', 26), 'B', ID_TC2, &TC2->TC_CHANNEL[0].TC_RB },
+    { GPIO('C', 29), 'B', ID_TC2, &TC2->TC_CHANNEL[1].TC_RB },
+    { GPIO('D', 8),  'B', ID_TC2, &TC2->TC_CHANNEL[2].TC_RB },
 #endif
 #elif CONFIG_MACH_SAM4
-    { GPIO('A', 0),  'B', ID_TC0, (void*)&TC0->TC_CHANNEL[0].TC_RA },
-    { GPIO('A', 15), 'B', ID_TC0, (void*)&TC0->TC_CHANNEL[1].TC_RA },
-    { GPIO('A', 26), 'B', ID_TC0, (void*)&TC0->TC_CHANNEL[2].TC_RA },
-    { GPIO('A', 1),  'B', ID_TC0, (void*)&TC0->TC_CHANNEL[0].TC_RB },
-    { GPIO('A', 16), 'B', ID_TC0, (void*)&TC0->TC_CHANNEL[1].TC_RB },
-    { GPIO('A', 27), 'B', ID_TC0, (void*)&TC0->TC_CHANNEL[2].TC_RB },
-    { GPIO('C', 23), 'B', ID_TC1, (void*)&TC1->TC_CHANNEL[0].TC_RA },
-    { GPIO('C', 26), 'B', ID_TC1, (void*)&TC1->TC_CHANNEL[1].TC_RA },
-    { GPIO('C', 29), 'B', ID_TC1, (void*)&TC1->TC_CHANNEL[2].TC_RA },
-    { GPIO('C', 24), 'B', ID_TC1, (void*)&TC1->TC_CHANNEL[0].TC_RB },
-    { GPIO('C', 27), 'B', ID_TC1, (void*)&TC1->TC_CHANNEL[1].TC_RB },
-    { GPIO('C', 30), 'B', ID_TC1, (void*)&TC1->TC_CHANNEL[2].TC_RB },
+    { GPIO('A', 0),  'B', ID_TC0, &TC0->TC_CHANNEL[0].TC_RA },
+    { GPIO('A', 15), 'B', ID_TC0, &TC0->TC_CHANNEL[1].TC_RA },
+    { GPIO('A', 26), 'B', ID_TC0, &TC0->TC_CHANNEL[2].TC_RA },
+    { GPIO('A', 1),  'B', ID_TC0, &TC0->TC_CHANNEL[0].TC_RB },
+    { GPIO('A', 16), 'B', ID_TC0, &TC0->TC_CHANNEL[1].TC_RB },
+    { GPIO('A', 27), 'B', ID_TC0, &TC0->TC_CHANNEL[2].TC_RB },
+    { GPIO('C', 23), 'B', ID_TC1, &TC1->TC_CHANNEL[0].TC_RA },
+    { GPIO('C', 26), 'B', ID_TC1, &TC1->TC_CHANNEL[1].TC_RA },
+    { GPIO('C', 29), 'B', ID_TC1, &TC1->TC_CHANNEL[2].TC_RA },
+    { GPIO('C', 24), 'B', ID_TC1, &TC1->TC_CHANNEL[0].TC_RB },
+    { GPIO('C', 27), 'B', ID_TC1, &TC1->TC_CHANNEL[1].TC_RB },
+    { GPIO('C', 30), 'B', ID_TC1, &TC1->TC_CHANNEL[2].TC_RB },
 #if CONFIG_MACH_SAM4E8E
-    { GPIO('C', 5),  'B', ID_TC2, (void*)&TC2->TC_CHANNEL[0].TC_RA },
-    { GPIO('C', 8),  'B', ID_TC2, (void*)&TC2->TC_CHANNEL[1].TC_RA },
-    { GPIO('C', 11), 'B', ID_TC2, (void*)&TC2->TC_CHANNEL[2].TC_RA },
-    { GPIO('C', 6),  'B', ID_TC2, (void*)&TC2->TC_CHANNEL[0].TC_RB },
-    { GPIO('C', 9),  'B', ID_TC2, (void*)&TC2->TC_CHANNEL[1].TC_RB },
-    { GPIO('C', 12), 'B', ID_TC2, (void*)&TC2->TC_CHANNEL[2].TC_RB },
+    { GPIO('C', 5),  'B', ID_TC2, &TC2->TC_CHANNEL[0].TC_RA },
+    { GPIO('C', 8),  'B', ID_TC2, &TC2->TC_CHANNEL[1].TC_RA },
+    { GPIO('C', 11), 'B', ID_TC2, &TC2->TC_CHANNEL[2].TC_RA },
+    { GPIO('C', 6),  'B', ID_TC2, &TC2->TC_CHANNEL[0].TC_RB },
+    { GPIO('C', 9),  'B', ID_TC2, &TC2->TC_CHANNEL[1].TC_RB },
+    { GPIO('C', 12), 'B', ID_TC2, &TC2->TC_CHANNEL[2].TC_RB },
 #endif
 #endif
 };
 
-static inline int tc_is_tc(void *reg) {
-    return (((uint32_t)reg & ~0xffff) == ((uint32_t)TC0 & ~0xffff));
+static inline int tc_is_tc(struct gpio_pwm g) {
+    return (((uint32_t)g.reg & ~0xffff) == ((uint32_t)TC0 & ~0xffff));
 }
-static inline TcChannel *tc_from_reg(void *reg) {
-    return (void*)((uint32_t)reg & ~0x3f);
+static inline TcChannel *tc_from_reg(struct gpio_pwm g) {
+    return (void*)((uint32_t)g.reg & ~0x3f);
 }
-static inline int tc_is_b(void *reg) {
-    return (((uint32_t)reg & 0x3f)
+static inline int tc_is_b(struct gpio_pwm g) {
+    return (((uint32_t)g.reg & 0x3f)
             == ((uint32_t)&TC0->TC_CHANNEL[0].TC_RB & 0x3f));
 }
 
 static void
 gpio_tc_write(struct gpio_pwm g, uint32_t val)
 {
-    TcChannel *tc = tc_from_reg(g.reg);
+    TcChannel *tc = tc_from_reg(g);
     uint32_t mask = TC_CMR_ACPA_Msk | TC_CMR_ACPC_Msk;
     uint32_t bits = TC_CMR_ACPA_CLEAR | TC_CMR_ACPC_SET;
     if (!val)
         bits = TC_CMR_ACPA_CLEAR | TC_CMR_ACPC_CLEAR;
     else if (val >= MAX_PWM)
         bits = TC_CMR_ACPA_SET | TC_CMR_ACPC_SET;
-    if (tc_is_b(g.reg)) {
+    if (tc_is_b(g)) {
         mask <<= 8;
         bits <<= 8;
     }
@@ -125,21 +125,21 @@ gpio_tc_setup(uint8_t pin, uint32_t cycle_time, uint8_t val)
     enable_pclock(p->id);
 
     // Enable PWM output
-    TcChannel *tc = tc_from_reg(p->reg);
+    struct gpio_pwm g = (struct gpio_pwm){ (void*)p->reg };
+    TcChannel *tc = tc_from_reg(g);
     uint32_t prev_cmr = tc->TC_CMR;
     if (prev_cmr && (prev_cmr & TC_CMR_TCCLKS_Msk) != div)
         shutdown("PWM already programmed at different speed");
     gpio_peripheral(pin, p->ptype, 0);
-    struct gpio_pwm pwm = (struct gpio_pwm){ p->reg };
     if (prev_cmr) {
-        gpio_tc_write(pwm, val);
+        gpio_tc_write(g, val);
     } else {
         tc->TC_CMR = TC_CMR_WAVE | TC_CMR_WAVSEL_UP_RC | div | TC_CMR_EEVT_XC0;
-        gpio_tc_write(pwm, val);
+        gpio_tc_write(g, val);
         tc->TC_RC = MAX_PWM;
         tc->TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG;
     }
-    return pwm;
+    return g;
 }
 
 
@@ -226,7 +226,7 @@ gpio_pwm_setup(uint8_t pin, uint32_t cycle_time, uint8_t val)
 void
 gpio_pwm_write(struct gpio_pwm g, uint32_t val)
 {
-    if (tc_is_tc(g.reg))
+    if (tc_is_tc(g))
         gpio_tc_write(g, val);
     else
         *(volatile uint32_t*)g.reg = val;
