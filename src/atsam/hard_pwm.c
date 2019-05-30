@@ -126,12 +126,12 @@ gpio_tc_setup(uint8_t pin, uint32_t cycle_time, uint8_t val)
 
     // Enable PWM output
     TcChannel *tc = tc_from_reg(p->reg);
-    uint32_t was_enabled = !!tc->TC_CMR;
-    if (was_enabled && (tc->TC_CCR & TC_CMR_TCCLKS_Msk) != div)
+    uint32_t prev_cmr = tc->TC_CMR;
+    if (prev_cmr && (prev_cmr & TC_CMR_TCCLKS_Msk) != div)
         shutdown("PWM already programmed at different speed");
     gpio_peripheral(pin, p->ptype, 0);
     struct gpio_pwm pwm = (struct gpio_pwm){ p->reg };
-    if (was_enabled) {
+    if (prev_cmr) {
         gpio_tc_write(pwm, val);
     } else {
         tc->TC_CMR = TC_CMR_WAVE | TC_CMR_WAVSEL_UP_RC | div | TC_CMR_EEVT_XC0;
